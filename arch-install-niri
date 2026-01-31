@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+# Install Paru (AUR Helper)
+sudo pacman -S --needed base-devel
+git clone https://aur.archlinux.org/paru.git
+cd paru
+makepkg -si
+
+sleep 2
+# Install Niri wm
+sudo pacman -Syu niri xwayland-satellite xdg-desktop-portal-gnome xdg-desktop-portal-gtk alacritty
+paru -S dms-shell-bin matugen cava qt6-multimedia-ffmpeg
+systemctl --user add-wants niri.service dms
+sleep 2
+
+# Install noctalia shell
+paru -S noctalia-shell
+
+# Noctalia shell startup in niri
+spawn-at-startup "qs" "-c" "noctalia-shell" >> ~/.config/niri/config.kdl
+
+# unit starting of noctalia shell
+systemctl --user add-wants niri.service noctalia.service
+
+

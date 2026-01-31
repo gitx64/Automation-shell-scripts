@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+Type=$(type -t $1)
+
+if [[ "$Type" == 'builtin' ]]; then
+    { help $1 || $1 -h || $1 --help; } | less 
+else
+    man $1
+fi
